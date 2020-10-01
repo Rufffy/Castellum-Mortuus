@@ -106,7 +106,6 @@ public class Patrolling : MonoBehaviour
             if (nodeIndex >= nodeTransforms.Length)
             {
                 nodeIndex = 0;
-                Debug.Log("Reset: " + nodeIndex);
             }
         }
         else
@@ -134,7 +133,6 @@ public class Patrolling : MonoBehaviour
 
     void ArriveAtNode()
     {
-        Debug.Log("Arrive: " + nodeIndex);
         // Find the next index node
         FindNodeIndex();
 
