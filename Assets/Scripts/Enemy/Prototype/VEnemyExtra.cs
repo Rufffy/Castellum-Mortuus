@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class VEnemyExtra : MonoBehaviour
 {
@@ -28,7 +29,21 @@ public class VEnemyExtra : MonoBehaviour
     {
         if (visioner.TargetInside(transform))
         {
-            cylinder.material = spottedMat;
+            // Shoot ray to visioner
+            //Ray ray = new Ray(transform.position, -visioner.transform.forward);
+            Ray ray = new Ray(transform.position, (visioner.transform.position - transform.position).normalized);
+            //Debug.DrawLine(transform.position, -visioner.transform.forward * visioner.radius);
+            Debug.DrawLine(transform.position, (visioner.transform.position - transform.position) * visioner.radius);
+            RaycastHit hit;
+            if(Physics.Raycast(ray, out hit, visioner.radius, LayerMask.GetMask("Agent")))
+            {
+                Debug.DrawLine(transform.position,  hit.point, Color.red);
+                if (hit.collider.tag == "Player")
+                {
+                    cylinder.material = spottedMat;
+                }
+                //cylinder.material = spottedMat;
+            }
         }
         else
         {
