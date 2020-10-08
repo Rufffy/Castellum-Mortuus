@@ -18,37 +18,42 @@ public class VEnemyExtra : MonoBehaviour
         visioner = visionExample.GetComponent<Vision>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (visioner.TargetInside(transform))
+        if(IsSpotted())
         {
-            // Shoot ray to visioner
-            //Ray ray = new Ray(transform.position, -visioner.transform.forward);
-            Ray ray = new Ray(transform.position, (visioner.transform.position - transform.position).normalized);
-            //Debug.DrawLine(transform.position, -visioner.transform.forward * visioner.radius);
-            Debug.DrawLine(transform.position, (visioner.transform.position - transform.position) * visioner.radius);
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit, visioner.radius, LayerMask.GetMask("Agent")))
-            {
-                Debug.DrawLine(transform.position,  hit.point, Color.red);
-                if (hit.collider.tag == "Player")
-                {
-                    cylinder.material = spottedMat;
-                }
-                //cylinder.material = spottedMat;
-            }
+            cylinder.material = spottedMat;
         }
         else
         {
             cylinder.material = unseenMat;
         }
+    }
+
+    bool IsSpotted()
+    {
+        if (visioner.TargetInside(transform))
+        {
+            // Shoot ray to visioner
+            Ray ray = new Ray(transform.position, (visioner.transform.position - transform.position).normalized);
+
+            Debug.DrawLine(transform.position, (visioner.transform.position - transform.position) * visioner.radius);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, visioner.radius, LayerMask.GetMask("Agent")))
+            {
+                Debug.DrawLine(transform.position, hit.point, Color.red);
+                if (hit.collider.tag == "Player")
+                {
+                    // This has been seen.
+                    return true;
+                }
+            }
+
+        }
+
+        // This is not seen.
+        return false;
     }
 }
 
