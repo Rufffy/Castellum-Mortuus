@@ -67,7 +67,7 @@ public class Patrolling : MonoBehaviour
                 //startingMoveTimer += Time.deltaTime;
                 if (waitTimer > waitTime + moveInitialisationTime)
                 {
-                    MoveToNode();
+                    StartMoveToNode();
                     startingMovement = false;
                 }
             }
@@ -78,6 +78,7 @@ public class Patrolling : MonoBehaviour
             ArriveAtNode();
         }
 
+        // is Moving
         if (!waitingAtNode)
         {
             Vector3 lookRotation = (agent.steeringTarget - transform.position).normalized;
@@ -153,7 +154,7 @@ public class Patrolling : MonoBehaviour
         }
     }
 
-    void MoveToNode()
+    void StartMoveToNode()
     {
         //agent.destination = nodeTransforms[nodeIndex].position;
         waitingAtNode = false;
