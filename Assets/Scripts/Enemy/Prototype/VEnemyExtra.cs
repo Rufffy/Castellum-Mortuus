@@ -41,7 +41,6 @@ public class VEnemyExtra : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, visioner.radius, LayerMask.GetMask("Agent")))
             {
-                Debug.DrawLine(transform.position, hit.point, Color.red);
                 if (hit.collider.tag == "Player")
                 {
                     // This has been seen.
