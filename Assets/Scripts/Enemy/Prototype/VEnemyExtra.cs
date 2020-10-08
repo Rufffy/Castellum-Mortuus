@@ -38,7 +38,6 @@ public class VEnemyExtra : MonoBehaviour
             // Shoot ray to visioner
             Ray ray = new Ray(transform.position, (visioner.transform.position - transform.position).normalized);
 
-            Debug.DrawLine(transform.position, (visioner.transform.position - transform.position) * visioner.radius);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, visioner.radius, LayerMask.GetMask("Agent")))
             {
